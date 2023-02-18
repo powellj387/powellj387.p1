@@ -95,6 +95,8 @@ public class Card{
         return cardRank;
     }
 
+    public boolean equals(Card cardToCheck) {return cardRank==cardToCheck.getRank()&&cardSuit==cardToCheck.getSuit();}
+
     public String toString()
     {
         return cardRank.getAbbreviation()+cardSuit.getAbbreviation();
