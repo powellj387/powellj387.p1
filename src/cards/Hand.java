@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 public class Hand {
     public Hand(Comparator<Card> aCardComparator){
-
+jhtdfkyutdc
     }
 
     public void addCard(Card aCard){
