@@ -1,3 +1,4 @@
+/*
 package cards;
 
 public class SpadesComparator {
@@ -11,3 +12,4 @@ public class SpadesComparator {
         return returnVal;
     }
 }
+*/
