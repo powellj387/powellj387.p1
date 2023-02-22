@@ -3,7 +3,7 @@ package cards;
 import java.util.Arrays;
 
 public class ULArrayList<E>
-        extends Object
+        extends Object //delete this
         implements Cloneable{
 
     private int size;
@@ -90,6 +90,8 @@ public class ULArrayList<E>
     }
 
     public String toString() {
+    //this is overkill, remove stringBuilder
+    //Used stringBuilder however was overkilling so you told me to remove
         StringBuilder string = new StringBuilder(Arrays.toString(cards));
         return string.toString();
     }
