@@ -1,6 +1,7 @@
 package cards;
 
-public class ULIndexOutOfBoundsException {
+public class ULIndexOutOfBoundsException extends Throwable {
+
     public ULIndexOutOfBoundsException(){
 
     }
