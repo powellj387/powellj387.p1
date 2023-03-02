@@ -3,86 +3,105 @@ package cards;
 import java.util.Arrays;
 
 public class ULArrayList<E>
-        extends Object //delete this
         implements Cloneable{
 
     private int size;
-    private E[] cards;
+    private E[] items;
 
     public ULArrayList() {
-        cards = (E[]) new Object[16];
+        items = (E[]) new Object[16];
         size=0;
     }
 
     public ULArrayList(int initialCapacity) {
-        cards = (E[]) new Object[initialCapacity];
+        items = (E[]) new Object[initialCapacity];
         size=0;
     }
 
-    public ULArrayList<E> clone() throws CloneNotSupportedException {
-        return (ULArrayList<E>) super.clone();
+    public ULArrayList<E> clone() {
+        ULArrayList<E> clone = new ULArrayList<E>();
+        try {
+            clone = (ULArrayList<E>) super.clone();
+            clone.items = (E[]) items.clone();
+        }
+        catch (CloneNotSupportedException exception) {}
+        return clone;
     }
 
     public void pushBack(E e){
+        if(items.length==size){
+            E[] temp = (E[]) new Object[2*items.length];
+            for(int i=0; i<size;++i){
+                temp[i] = items[i];
+            }
+            items = temp;
+        }
         size++;
-        cards[size-1]= e;
+        items[size-1]= e;
     }
 
     public void insertAt(E element, int index) throws ULIndexOutOfBoundsException{
-        if (index >= cards.length){
+        if (index>size || index < 0){
             throw new ULIndexOutOfBoundsException();
         }
-        for(int i=size;i>0;--i){
-            cards[i] = cards[i-1];
+        if(items.length==size) {
+            E[] temp = (E[]) new Object[2 * items.length];
+            for (int i = 0; i < size; ++i) {
+                temp[i] = items[i];
+            }
+            items = temp;
+       }
+        for(int i=size;i>index;--i){
+            items[i] = items[i-1];
         }
-        cards[index] = element;
+        items[index] = element;
         ++size;
     }
 
 
     public void clear(){
         while (size>0){
-           cards[size-1] = null;
+           items[size-1] = null;
             --size;
         }
     }
 
     public E get(int index) throws ULIndexOutOfBoundsException{
         if (index >= size){
-            throw new ULIndexOutOfBoundsException();
+            throw new ULIndexOutOfBoundsException("Index out of bounds");
         }
-        return cards[index];
+        return items[index];
     }
 
     public E popBack() throws ULIndexOutOfBoundsException {
         if (size==0){
             throw new ULIndexOutOfBoundsException();
         }
-        E temp = cards[size-1];
-        cards[size-1]=null;
+        E temp = items[size-1];
+        items[size-1]=null;
+        --size;
         return temp;
     }
 
     public E removeAt(int index) throws ULIndexOutOfBoundsException{
-        if (index >= cards.length){
+        if (index>=size || index < 0){
             throw new ULIndexOutOfBoundsException();
         }
-        E temp = cards[index];
-        cards[index]=null;
+        E temp = items[index];
+        items[index]=null;
         for(int i=index;i<size;++i){
-            cards[i] = cards[i+1];
+            items[i] = items[i+1];
         }
         --size;
         return temp;
     }
 
     public E set(int index, E element) throws ULIndexOutOfBoundsException{
-        if (index >= size){
+        if (index>=size || index < 0){
             throw new ULIndexOutOfBoundsException();
         }
-        E temp = cards[index];
-        cards[index]=element;
-        return temp;
+        items[index]=element;
+        return items[index];
     }
 
     public int size(){
@@ -90,9 +109,7 @@ public class ULArrayList<E>
     }
 
     public String toString() {
-    //this is overkill, remove stringBuilder
-    //Used stringBuilder however was overkilling so you told me to remove
-        StringBuilder string = new StringBuilder(Arrays.toString(cards));
+        StringBuilder string = new StringBuilder(Arrays.toString(items));
         return string.toString();
     }
 }
