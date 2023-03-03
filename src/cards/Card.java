@@ -1,8 +1,6 @@
+//@author Julian Powell
 package cards;
-import java.lang.Object;
-import java.lang.Enum;
 public class Card{
-
     public enum Rank
     {
         TWO("2"),THREE("3"),TEN("T"),SIX("6"),SEVEN("7"),

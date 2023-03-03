@@ -1,40 +1,35 @@
-
+//@author Julian Powell
 package cards;
-
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
-
 public class Hand {
-    private Comparator<Card> handComp;
-    private ArrayList<Card> hand;
-    private int currentIndex = 0;
-
+    Comparator<Card> handComp;
+    private ULArrayList<Card> hand;
+    private int currentIndex;
 
     public Hand(Comparator<Card> aCardComparator) {
         handComp = aCardComparator;
-        hand = new ArrayList<Card>();
+        hand = new ULArrayList<>();
+        currentIndex = 0;
     }
 
     public void addCard(Card aCard) {
-        hand.set(currentIndex, aCard);
-        currentIndex++;
+            hand.pushBack(aCard);
     }
 
     public void removeCard(Card aCard) {
-        Iterator<Card> iter = hand.iterator();
-        while (iter.hasNext()) {
-            Card card = iter.next();
-            if ((aCard.getRank() == card.getRank()) && (aCard.getSuit() == card.getSuit())) {
-                iter.remove();
+        //goes through the list to find the item and when it does, removes it
+        for(int i=0;i< hand.size();++i) {
+            if ((aCard.getRank() == hand.get(i).getRank()) && (aCard.getSuit() == hand.get(i).getSuit())) {
+                hand.removeAt(i);
             }
         }
     }
 
     public boolean contains (Card aCard){
         boolean isHere = false;
-            for(Card card: hand){
-                if((aCard.getRank() == card.getRank()) && (aCard.getSuit() == card.getSuit())) {
+        //searches through the list for the item and returns true if it is found
+            for(int i=0;i< hand.size();++i){
+                if((aCard.getRank() == hand.get(i).getRank()) && (aCard.getSuit() == hand.get(i).getSuit())) {
                     isHere = true;
                 }
             }
@@ -50,6 +45,25 @@ public class Hand {
 
     public int size () {
         return hand.size();
+    }
+
+    //Writing this Bubble-sorting method in order to hopefully
+    // shorten up code in the consoleInterface ("+") condition
+    public void compSort(){
+        //nested for-loops in order to ensure that the items are in
+        // the correct order rather than doing a single switch and praying
+        // the next comparison needs no switching
+        for(int i=0; i<hand.size()-1;++i){
+            for(int j=0; j<hand.size()-1;++j){
+                if(handComp.compare(hand.get(j),hand.get(j+1)) > 0){
+                    //places the information of the item at "j" into a temporary
+                    // variable because it is to be replaced by the item in front of it
+                    Card temp = hand.get(j);
+                    hand.set(j, hand.get(j+1));
+                    hand.set(j+1, temp);
+                }
+            }
+        }
     }
 
     public String toString () {
